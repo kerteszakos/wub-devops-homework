@@ -13,3 +13,4 @@ Configuration:
       level: info
       AppenderRef:
         ref: Console
+# dummy entry
