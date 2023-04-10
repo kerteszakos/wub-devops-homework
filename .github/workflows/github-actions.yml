@@ -18,13 +18,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 14
-     - name: Cache Maven package
-       uses: actions/cache@v2
-       with:
-         path: ~/
-         key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
-     - name: Test with Maven
-       run: mvn -B test --file pom.xml
+      - name: Cache Maven package
+        uses: actions/cache@v2
+        with:
+          path: ~/
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Test with Maven
+        run: mvn -B test --file pom.xml
 #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
 #      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
 #      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
