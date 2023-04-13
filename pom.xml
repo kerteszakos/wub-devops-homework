@@ -16,6 +16,15 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+    <resources>
+	<resource>
+		<directory>src/main/resources</directory>
+		<filtering>true</filtering>
+		<includes>
+			<include>**/*.properties</include>
+		</includes>
+	</resource>
+    </resources>
     <dependencies>
 
         <dependency>
