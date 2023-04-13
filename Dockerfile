@@ -1,6 +1,8 @@
 FROM maven:3.6.0-jdk-11-slim AS build
 WORKDIR .
 COPY src /home/app/src
+COPY application.properties /home/app
+COPY log4j2-weather.yml /home/app
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
