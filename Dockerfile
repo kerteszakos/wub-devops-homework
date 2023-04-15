@@ -7,14 +7,22 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:11-jre-slim
-COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
-
-FROM ubuntu:latest
+#Bash script
 ENV ISITCURRENTLYFISHY = notatall
 COPY check_env_var.sh /root/check_env_var.sh
 RUN chmod 0644 /root/check_env_var.sh
 RUN apt-get update
 RUN apt-get -y install cron
 RUN crontab -l | { cat; echo "* * * * * bash /root/check_env_var.sh"; } | crontab -
+#Java webapp part
+COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+
+#FROM ubuntu:latest
+#ENV ISITCURRENTLYFISHY = notatall
+#COPY check_env_var.sh /root/check_env_var.sh
+#RUN chmod 0644 /root/check_env_var.sh
+#RUN apt-get update
+#RUN apt-get -y install cron
+#RUN crontab -l | { cat; echo "* * * * * bash /root/check_env_var.sh"; } | crontab -
