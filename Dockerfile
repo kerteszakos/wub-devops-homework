@@ -15,7 +15,7 @@ RUN chmod +x /root/check_env_var.sh
 RUN apt-get update
 RUN apt-get -y install cron
 RUN crontab -l | { cat; echo "* * * * * bash /root/check_env_var.sh"; } | crontab -
-CMD cron
+CMD service cron start
 # Java webapp part
 #COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
 #EXPOSE 8080
