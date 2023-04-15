@@ -17,6 +17,6 @@ RUN apt-get -y install cron
 RUN crontab -l | { cat; echo "* * * * * bash /root/check_env_var.sh"; } | crontab -
 CMD cron
 # Java webapp part
-COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar","&"]
+#COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
+#EXPOSE 8080
+#ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar","&"]
