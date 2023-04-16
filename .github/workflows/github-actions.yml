@@ -8,7 +8,7 @@ on:
     branches:
       - main
 jobs:
-  run_tests:
+  run_unit_tests:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -24,7 +24,21 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
       - name: Test with Maven
         run: mvn -B test --file pom.xml
-  docker:
+  vulnerability_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build a Docker image
+        run: docker build -t kerteszakos/app .
+      - name: Run Snyk to check Docker image for vulnerabilities
+        continue-on-error: true
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: kerteszakos/app
+          args: --file=Dockerfile --severity-threshold=high
+  docker_build_and_push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
